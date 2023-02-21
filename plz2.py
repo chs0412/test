@@ -21,7 +21,7 @@ def page(index,info):
     time.sleep(5)
     
     taglists=[]
-    tags=driver.find_element(By.CSS_SELECTOR,".Contents__widgetBody--3w2JG").find_elements(By.TAG_NAME,"a")
+    tags=driver.find_element(By.CSS_SELECTOR,".Tags__widgetBody--19Uop").find_elements(By.TAG_NAME,"a")
     for tag in tags:
         taglists.append(tag.text)
     info.append(taglists)
