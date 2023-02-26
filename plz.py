@@ -21,10 +21,12 @@ def page(index,info):
     time.sleep(5)
     
     taglists=[]
-    tags=driver.find_element(By.CSS_SELECTOR,".Tags__widgetBody--19Uop").find_elements(By.TAG_NAME,"a")
+    tags=driver.find_element(By.CSS_SELECTOR,".Contents__widgetBody--3w2JG").find_elements(By.TAG_NAME,"a")
     for tag in tags:
         taglists.append(tag.text)
     info.append(taglists)
+    
+    
     return comment(index,info)
         
     
@@ -40,7 +42,7 @@ def comment(index,info):
     makes = int(values[3].text)
     remixes = int(values[4].text)
     apps = int(values[5].text)
-    date=driver.find_element(By.CSS_SELECTOR,".ThingTitle__createdBy--1fCKx").text
+    date= ' '.join(driver.find_element(By.CSS_SELECTOR,".ThingTitle__createdBy--1fCKx").text.split(" ")[2:]) 
     info.append(comments)
     
     try:
@@ -96,7 +98,7 @@ def getlists(x,writer):
         
         try:
             print(idx)
-            url = "https://www.thingiverse.com/search?page=" + str(idx) + "&per_page=20&sort=popular&posted_after=now-30d&type=things&q=&category_id="
+            url = "https://www.thingiverse.com/search?page=" + str(idx) + "&per_page=20&sort=popular&type=things&q=&category_id="+str(x) 
             
             driver = webdriver.Chrome(chrome_driver, options=chrome_options)
             driver.get(url)
@@ -145,7 +147,7 @@ def getlists(x,writer):
             pass
         
         idx+=1
-        if idx>20:
+        if idx>500:
             break
             
             
@@ -156,4 +158,4 @@ writer=csv.writer(f)
 column=["title","name","likes","tags","commentsCount","comments","makes","remixes","apps","date","url","id","img"]
 writer.writerow(column)
             
-getlists(105,writer)
+getlists(127,writer)
